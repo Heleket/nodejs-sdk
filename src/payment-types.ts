@@ -1,4 +1,4 @@
-import type { CourseSource, PaymentStatus } from './status.js';
+import type { AmlLinkStatus, CourseSource, PaymentStatus } from './status.js';
 
 /** Request body for POST /v1/payment. See docs for the full optional set. */
 export interface CreateInvoiceRequest {
@@ -145,7 +145,22 @@ export interface RefundRequest {
 export interface RefundResult {
   commission?: string;
   amount?: string;
+  currency?: string;
+  txid?: string | null;
+  network?: string;
   address?: string;
+  status?: string;
+}
+
+/**
+ * One AML/KYC/SoF questionnaire link, returned per item by
+ * {@link HeleketPayment.getAmlLinks} for a blocked (`locked`) payment. Hand
+ * `link` to the end user to complete the questionnaire and unblock the payment.
+ */
+export interface AmlLink {
+  link?: string;
+  expired_at?: string;
+  status?: AmlLinkStatus | string;
 }
 
 /** "type" must be "payment" or "wallet". */

@@ -1,4 +1,4 @@
-.PHONY: help install build test test-watch lint lint-fix format format-check qa example-invoice example-info example-history example-static-wallet example-webhook example-balance example-payout example-payout-info example-services example-rates webhook-inspect docker-build docker-shell docker-webhook docker-qa clean
+.PHONY: help install build test test-watch lint lint-fix format format-check qa example-invoice example-info example-history example-static-wallet example-webhook example-balance example-payout example-payout-info example-services example-rates example-refund example-aml-links webhook-inspect docker-build docker-shell docker-webhook docker-qa clean
 
 NODE ?= node
 NPM  ?= npm
@@ -62,6 +62,12 @@ example-services: build ## List payment or payout services (KIND=payment|payout)
 
 example-rates: build ## List exchange rates (CURRENCY=USD by default)
 	$(NODE) dist/examples/10-exchange-rates.js $(CURRENCY)
+
+example-refund: build ## Refund an invoice via the payout key (pass UUID and ADDRESS env vars)
+	$(NODE) dist/examples/11-refund.js $(UUID) $(ADDRESS)
+
+example-aml-links: build ## Fetch AML links for a blocked payment (pass UUID env var)
+	$(NODE) dist/examples/12-aml-links.js $(UUID)
 
 webhook-inspect: build ## Pipe a webhook payload into the inspector CLI (pass KEY env var)
 	$(NODE) dist/bin/heleket-webhook-inspect.js --key=$(KEY)

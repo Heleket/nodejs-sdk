@@ -69,7 +69,8 @@ describe('WebhookVerifier', () => {
     // replace invalid bytes with U+FFFD and the request would fail later as
     // a confusing "signature mismatch". Surface the real reason instead.
     assert.throws(
-      () => new WebhookVerifier(API_KEY).verifyRaw(Buffer.from([0xff, 0xfe, 0x00, 0x62, 0x61, 0x64])),
+      () =>
+        new WebhookVerifier(API_KEY).verifyRaw(Buffer.from([0xff, 0xfe, 0x00, 0x62, 0x61, 0x64])),
       /UTF-8/,
     );
   });

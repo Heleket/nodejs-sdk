@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 
@@ -29,6 +30,45 @@ describe('PayoutClient', () => {
     });
     assert.equal(payout.uuid, 'po-1');
     assert.equal(fake.lastRequest().url, 'https://api.heleket.com/v1/payout');
+  });
+
+  it('refund hits /v1/payment/refund signed with the payout key', async () => {
+    const fake = new FakeTransport().enqueueJson({
+      state: 0,
+      result: { amount: '5', address: 'TRefundAddr', status: 'refund_process' },
+    });
+    const client = newClient(fake);
+
+    const result = await client.refund({
+      uuid: 'inv-1',
+      address: 'TRefundAddr',
+      is_subtract: true,
+    });
+    assert.equal(result.amount, '5');
+
+    const req = fake.lastRequest();
+    assert.equal(req.method, 'POST');
+    // Payment-domain path, but signed with the payout key — that's why refund
+    // lives on HeleketPayout.
+    assert.equal(req.url, 'https://api.heleket.com/v1/payment/refund');
+    const expectedBody = JSON.stringify({
+      uuid: 'inv-1',
+      address: 'TRefundAddr',
+      is_subtract: true,
+    });
+    assert.equal(req.body, expectedBody);
+    const expectedSign = createHash('md5')
+      .update(Buffer.from(expectedBody).toString('base64') + API_KEY)
+      .digest('hex');
+    assert.equal(req.headers['sign'], expectedSign);
+  });
+
+  it('refund requires uuid or order_id', async () => {
+    const client = newClient(new FakeTransport());
+    await assert.rejects(
+      () => client.refund({ address: 'TRefundAddr', is_subtract: true }),
+      /one of uuid or order_id/,
+    );
   });
 
   it('calculateWithdrawal serializes boolean fields', async () => {

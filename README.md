@@ -52,10 +52,11 @@ Full reference lives in [`docs/`](docs/README.md):
 src/                     TypeScript source — single source of truth
 src/webhook/             Webhook signature verification (importable as @heleket/sdk/webhook)
 test/                    node:test unit tests + FakeTransport for offline testing
-examples/                Ten runnable scripts covering every endpoint
+examples/                Twelve runnable scripts covering every endpoint
 bin/                     heleket-webhook-inspect — CLI for verifying webhook payloads
 docker/                  Multi-stage Dockerfile (node:20-alpine)
 docs/                    Full module documentation
+AGENTS.md                Architecture tour for AI agents (and humans in a hurry)
 ```
 
 ## Common tasks
@@ -81,6 +82,12 @@ make help                 # Full target list
 - **Two separate API keys** — payments and payouts. Mixing them breaks webhook verification.
 - **The SDK never logs API keys.** Debug-mode output via `slog`-style entries includes URL, method, body, status — but the `sign` header and API key are explicitly excluded.
 
+## Releasing
+
+- Bump the version in **both** `package.json` and `src/version.ts` (the latter feeds the `User-Agent`).
+- Update [`CHANGELOG.md`](CHANGELOG.md) and, for breaking changes, [`UPGRADING.md`](UPGRADING.md).
+- Tag the release `vX.Y.Z` and push the tag. [`.github/workflows/publish.yml`](.github/workflows/publish.yml) verifies the tag matches `package.json`, builds, and publishes `@heleket/sdk` to npm with provenance (requires the `NPM_TOKEN` repository secret).
+
 ## License
 
-MIT.
+MIT — see [LICENSE](LICENSE).

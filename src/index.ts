@@ -22,13 +22,17 @@ export { sign, signatureEqual } from './signature.js';
 export { ApiError, HeleketError, HttpError, SignatureError, ValidationError } from './errors.js';
 
 export {
+  AmlLinkStatus,
   CourseSource,
   PaymentStatus,
   PayoutStatus,
+  isAmlLinkStatusFinal,
+  isAmlLinkStatusSuccessful,
   isPaymentStatusFinal,
   isPaymentStatusSuccessful,
   isPayoutStatusFinal,
   isPayoutStatusSuccessful,
+  toAmlLinkStatus,
   toPaymentStatus,
   toPayoutStatus,
 } from './status.js';
@@ -36,6 +40,7 @@ export {
 export type { RequestOptions } from './client.js';
 
 export type {
+  AmlLink,
   Balance,
   BlockStaticWalletRequest,
   BlockedWallet,

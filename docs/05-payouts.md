@@ -42,6 +42,22 @@ console.log(payout.status); // typically "process" initially
 console.log(payout.balance); // remaining balance after deduction
 ```
 
+## refund
+
+`refund(req: RefundRequest): Promise<RefundResult>` → `POST /v1/payment/refund`
+
+Refund a paid invoice in full or in part. Although the path is in the payment domain, the Heleket API signs `/v1/payment/refund` with the **payout** API key — that's why `refund` lives on `HeleketPayout` and not `HeleketPayment`.
+
+Required: `address`, `is_subtract`; one of `uuid` / `order_id`.
+
+```ts
+await client.refund({
+  uuid: invoiceUuid,
+  address: 'TBaCkAdDrEsS',
+  is_subtract: true,
+});
+```
+
 ## getInfo
 
 `getInfo(opts: InfoOptions): Promise<Payout>` → `POST /v1/payout/info`

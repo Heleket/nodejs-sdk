@@ -2,12 +2,16 @@ import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 
 import {
+  AmlLinkStatus,
   PaymentStatus,
   PayoutStatus,
+  isAmlLinkStatusFinal,
+  isAmlLinkStatusSuccessful,
   isPaymentStatusFinal,
   isPaymentStatusSuccessful,
   isPayoutStatusFinal,
   isPayoutStatusSuccessful,
+  toAmlLinkStatus,
 } from '../src/status.js';
 
 describe('PaymentStatus', () => {
@@ -39,5 +43,24 @@ describe('PayoutStatus', () => {
   it('classifies successful payouts', () => {
     assert.equal(isPayoutStatusSuccessful(PayoutStatus.Paid), true);
     assert.equal(isPayoutStatusSuccessful(PayoutStatus.Fail), false);
+  });
+});
+
+describe('AmlLinkStatus', () => {
+  it('classifies final vs intermediate', () => {
+    assert.equal(isAmlLinkStatusFinal(AmlLinkStatus.Completed), true);
+    assert.equal(isAmlLinkStatusFinal(AmlLinkStatus.Expired), true);
+    assert.equal(isAmlLinkStatusFinal(AmlLinkStatus.Init), false);
+    assert.equal(isAmlLinkStatusFinal(AmlLinkStatus.Pending), false);
+  });
+
+  it('classifies successful (completed) links', () => {
+    assert.equal(isAmlLinkStatusSuccessful(AmlLinkStatus.Completed), true);
+    assert.equal(isAmlLinkStatusSuccessful(AmlLinkStatus.Expired), false);
+  });
+
+  it('normalises unknown wire values to Unknown', () => {
+    assert.equal(toAmlLinkStatus('pending'), AmlLinkStatus.Pending);
+    assert.equal(toAmlLinkStatus('something-new'), AmlLinkStatus.Unknown);
   });
 });

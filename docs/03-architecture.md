@@ -37,36 +37,37 @@
 
 ## Source files
 
-| File                      | Responsibility                                               |
-| ------------------------- | ------------------------------------------------------------ |
-| `src/index.ts`            | Public surface — every export merchants use                  |
-| `src/config.ts`           | `ClientOptions` + `resolveConfig` validation                 |
-| `src/signature.ts`        | `sign(body, key)` + `signatureEqual(a, b)`                   |
-| `src/errors.ts`           | `ApiError`, `ValidationError`, `HttpError`, `SignatureError` |
-| `src/transport.ts`        | `Transport` interface + default `FetchTransport`             |
-| `src/debug.ts`            | `DebugEntry`, `DebugSink`, default stderr sink               |
-| `src/status.ts`           | `PaymentStatus`, `PayoutStatus`, `CourseSource` + helpers    |
-| `src/client.ts`           | `BaseClient.post` — the one place that performs HTTP         |
-| `src/payment.ts`          | `HeleketPayment` + every payment endpoint                    |
-| `src/payment-types.ts`    | Typed request/response interfaces                            |
-| `src/payout.ts`           | `HeleketPayout` + every payout endpoint                      |
-| `src/payout-types.ts`     | Typed request/response interfaces                            |
-| `src/webhook/verifier.ts` | `WebhookVerifier` (byte-fidelity)                            |
-| `src/webhook/payload.ts`  | `WebhookPayload` with typed accessors                        |
+| File                      | Responsibility                                                             |
+| ------------------------- | -------------------------------------------------------------------------- |
+| `src/index.ts`            | Public surface — every export merchants use                                |
+| `src/config.ts`           | `ClientOptions` + `resolveConfig` validation                               |
+| `src/signature.ts`        | `sign(body, key)` + `signatureEqual(a, b)`                                 |
+| `src/errors.ts`           | `ApiError`, `ValidationError`, `HttpError`, `SignatureError`               |
+| `src/transport.ts`        | `Transport` interface + default `FetchTransport`                           |
+| `src/debug.ts`            | `DebugEntry`, `DebugSink`, default stderr sink                             |
+| `src/status.ts`           | `PaymentStatus`, `PayoutStatus`, `AmlLinkStatus`, `CourseSource` + helpers |
+| `src/client.ts`           | `BaseClient.post` / `.get` → `send` — the one place that performs HTTP     |
+| `src/payment.ts`          | `HeleketPayment` + every payment endpoint                                  |
+| `src/payment-types.ts`    | Typed request/response interfaces                                          |
+| `src/payout.ts`           | `HeleketPayout` + every payout endpoint                                    |
+| `src/payout-types.ts`     | Typed request/response interfaces                                          |
+| `src/webhook/verifier.ts` | `WebhookVerifier` (byte-fidelity)                                          |
+| `src/webhook/payload.ts`  | `WebhookPayload` with typed accessors                                      |
 
 ## Request flow
 
 1. Caller invokes `client.createInvoice({...})`.
 2. `HeleketPayment.createInvoice` calls `BaseClient.post('/v1/payment', req)`.
-3. `BaseClient.post`:
-   - JSON-encodes the request (filters out `undefined` fields; empty objects → empty body).
-   - Signs the body with the API key via `sign`.
-   - Builds headers: `merchant`, `sign`, `Content-Type`.
+3. `BaseClient.post` JSON-encodes the request (filters out `undefined` fields; empty objects → empty body), then both `post` and `get` delegate to the shared `send`, which:
+   - Signs the body with the API key via `sign` (empty body for `get` → `md5(apiKey)`).
+   - Builds headers: `merchant`, `sign`, and `Content-Type` (only when there's a body).
    - Calls debug sink (no-op when `debug=false`).
-   - Calls `Transport.roundTrip('POST', url, headers, body, { signal, timeoutMs })`.
+   - Calls `Transport.roundTrip(method, url, headers, body, { signal, timeoutMs })`.
    - Calls debug sink with the response.
    - Decodes the response envelope (`state`, `result`, `errors`).
 4. On `state=0`, the `result` is returned as the typed `T`. On any failure, a typed error is thrown.
+
+Read-only, path-only endpoints (just `getExchangeRates` today) call `BaseClient.get(path)` instead, which signs an empty body and dispatches a `GET`.
 
 ## Signature flow
 

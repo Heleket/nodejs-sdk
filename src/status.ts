@@ -120,6 +120,46 @@ export function isPayoutStatusSuccessful(status: string): boolean {
 }
 
 /**
+ * AML/KYC/SoF questionnaire-link statuses. Returned per item by
+ * {@link HeleketPayment.getAmlLinks} for a blocked (`locked`) payment. "Final"
+ * statuses are terminal — the link won't transition further; intermediate ones
+ * may still change while the user works through the questionnaire.
+ */
+export const AmlLinkStatus = {
+  /** Link created, not yet opened. Intermediate. */
+  Init: 'init',
+  /** User is working through the questionnaire. Intermediate. */
+  Pending: 'pending',
+  /** Questionnaire completed. Final + successful. */
+  Completed: 'completed',
+  /** Link expired before completion. Final. */
+  Expired: 'expired',
+  /** Sentinel for statuses the SDK doesn't yet know about. See {@link toAmlLinkStatus}. */
+  Unknown: 'unknown',
+} as const;
+
+export type AmlLinkStatus = (typeof AmlLinkStatus)[keyof typeof AmlLinkStatus];
+
+const AML_LINK_STATUS_VALUES: Set<string> = new Set(Object.values(AmlLinkStatus));
+
+/** Normalise a wire-level AML-link status. Returns {@link AmlLinkStatus.Unknown} on miss. */
+export function toAmlLinkStatus(value: string): AmlLinkStatus {
+  return AML_LINK_STATUS_VALUES.has(value) ? (value as AmlLinkStatus) : AmlLinkStatus.Unknown;
+}
+
+const AML_LINK_FINAL: Set<string> = new Set([AmlLinkStatus.Completed, AmlLinkStatus.Expired]);
+
+/** Reports whether the AML link is terminal — it won't transition further. */
+export function isAmlLinkStatusFinal(status: string): boolean {
+  return AML_LINK_FINAL.has(status);
+}
+
+/** Reports whether the questionnaire was completed. */
+export function isAmlLinkStatusSuccessful(status: string): boolean {
+  return status === AmlLinkStatus.Completed;
+}
+
+/**
  * Exchange-rate sources accepted by create-invoice and create-payout. See
  * https://doc.heleket.com/methods/payments/creating-invoice (course_source).
  */

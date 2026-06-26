@@ -1,6 +1,7 @@
 import { BaseClient, paginate, type RequestOptions } from './client.js';
 import { type ClientOptions, resolveConfig } from './config.js';
 import type {
+  AmlLink,
   Balance,
   BlockStaticWalletRequest,
   BlockedWallet,
@@ -12,7 +13,6 @@ import type {
   InfoOptions,
   Invoice,
   QrCode,
-  RefundRequest,
   RefundResult,
   Service,
   StaticWallet,
@@ -46,6 +46,26 @@ export class HeleketPayment extends BaseClient {
   async getInfo(opts: InfoOptions, options?: RequestOptions): Promise<Invoice> {
     requireUuidOrOrderId(opts);
     return this.post('/v1/payment/info', opts, options);
+  }
+
+  /**
+   * AML/KYC/SoF questionnaire links for a blocked (`locked`) payment.
+   *
+   * Returns the questionnaire links the end user must complete to unblock a
+   * held payment. Look up by `uuid` OR `orderId` (the server prioritises
+   * `order_id` when both are sent). Each item carries `link` (the URL to hand
+   * to the user), `expired_at`, and `status` (an {@link AmlLinkStatus}).
+   */
+  async getAmlLinks(uuid?: string, orderId?: string, options?: RequestOptions): Promise<AmlLink[]> {
+    if (!uuid && !orderId) {
+      throw new Error('heleket: one of uuid or order_id must be set');
+    }
+    const result = await this.post<AmlLink[] | null>(
+      '/v1/payment/aml-links',
+      { uuid, order_id: orderId },
+      options,
+    );
+    return result ?? [];
   }
 
   /** Paginated payment history with optional date filters. */
@@ -110,12 +130,6 @@ export class HeleketPayment extends BaseClient {
     return this.post('/v1/wallet/blocked-address-refund', { uuid, address }, options);
   }
 
-  /** Refund an invoice in full or in part. */
-  async refund(req: RefundRequest, options?: RequestOptions): Promise<RefundResult> {
-    requireUuidOrOrderId(req);
-    return this.post('/v1/payment/refund', req, options);
-  }
-
   /** Ask Heleket to redeliver the last webhook for the invoice. */
   async resendWebhook(opts: InfoOptions, options?: RequestOptions): Promise<void> {
     requireUuidOrOrderId(opts);
@@ -144,9 +158,12 @@ export class HeleketPayment extends BaseClient {
     return wrappers[0]?.balance ?? { merchant: [], user: [] };
   }
 
-  /** Exchange-rate list for a given fiat currency. */
+  /**
+   * Exchange-rate list for a given fiat currency. Read-only endpoint: issued as
+   * a GET with the currency in the path (empty signed body).
+   */
   async getExchangeRates(currency: string, options?: RequestOptions): Promise<ExchangeRate[]> {
-    return this.post(`/v1/exchange-rate/${encodeURIComponent(currency)}/list`, null, options);
+    return this.get(`/v1/exchange-rate/${encodeURIComponent(currency)}/list`, options);
   }
 }
 

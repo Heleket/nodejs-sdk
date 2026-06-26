@@ -8,19 +8,19 @@ Start with **Installation** and **Configuration**, then either jump into **Payme
 
 ## Table of contents
 
-| Chapter                                                           | When to read                                               |
-| ----------------------------------------------------------------- | ---------------------------------------------------------- |
-| [01 — Installation](01-installation.md)                           | Once, when setting up                                      |
-| [02 — Configuration](02-configuration.md)                         | Once, plus when tuning timeouts/debug/transport            |
-| [03 — Architecture](03-architecture.md)                           | When you want to know how the SDK is put together          |
-| [04 — Payments API](04-payments.md)                               | Reference for every payment endpoint                       |
-| [05 — Payouts API](05-payouts.md)                                 | Reference for every payout endpoint                        |
-| [06 — Webhooks](06-webhooks.md)                                   | **Read before production**                                 |
-| [07 — Debugging](07-debugging.md)                                 | When something doesn't work                                |
-| [08 — Testing](08-testing.md)                                     | When you want to write tests against the SDK               |
-| [09 — Error handling](09-error-handling.md)                       | When designing your error-recovery strategy                |
-| [10 — Reference](10-reference.md)                                 | Lookup table for statuses, currencies, endpoints           |
-| [12 — Troubleshooting](12-troubleshooting.md)                     | When stuck                                                 |
+| Chapter                                       | When to read                                      |
+| --------------------------------------------- | ------------------------------------------------- |
+| [01 — Installation](01-installation.md)       | Once, when setting up                             |
+| [02 — Configuration](02-configuration.md)     | Once, plus when tuning timeouts/debug/transport   |
+| [03 — Architecture](03-architecture.md)       | When you want to know how the SDK is put together |
+| [04 — Payments API](04-payments.md)           | Reference for every payment endpoint              |
+| [05 — Payouts API](05-payouts.md)             | Reference for every payout endpoint               |
+| [06 — Webhooks](06-webhooks.md)               | **Read before production**                        |
+| [07 — Debugging](07-debugging.md)             | When something doesn't work                       |
+| [08 — Testing](08-testing.md)                 | When you want to write tests against the SDK      |
+| [09 — Error handling](09-error-handling.md)   | When designing your error-recovery strategy       |
+| [10 — Reference](10-reference.md)             | Lookup table for statuses, currencies, endpoints  |
+| [12 — Troubleshooting](12-troubleshooting.md) | When stuck                                        |
 
 ## Conventions
 

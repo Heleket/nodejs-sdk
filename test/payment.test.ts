@@ -118,6 +118,55 @@ describe('PaymentClient', () => {
     );
   });
 
+  it('getExchangeRates issues a GET with an empty signed body', async () => {
+    const fake = new FakeTransport().enqueueJson({
+      state: 0,
+      result: [{ from: 'USDT', to: 'USD', course: '1.0' }],
+    });
+    const client = newClient(fake);
+
+    const rates = await client.getExchangeRates('USD');
+    assert.equal(rates.length, 1);
+    assert.equal(rates[0]?.from, 'USDT');
+
+    const req = fake.lastRequest();
+    assert.equal(req.method, 'GET');
+    assert.equal(req.url, 'https://api.heleket.com/v1/exchange-rate/USD/list');
+    // No body on a GET — the signed bytes collapse to md5(api_key), and no
+    // Content-Type is advertised.
+    assert.equal(req.body, '');
+    assert.equal(req.headers['Content-Type'], undefined);
+    const expectedSign = createHash('md5').update(API_KEY).digest('hex');
+    assert.equal(req.headers['sign'], expectedSign);
+  });
+
+  it('getAmlLinks posts the identifier and parses the list', async () => {
+    const fake = new FakeTransport().enqueueJson({
+      state: 0,
+      result: [
+        { link: 'https://aml.heleket.com/q/abc', expired_at: '1700000000', status: 'pending' },
+      ],
+    });
+    const client = newClient(fake);
+
+    const links = await client.getAmlLinks('uuid-9');
+    assert.equal(links.length, 1);
+    assert.equal(links[0]?.status, 'pending');
+
+    const req = fake.lastRequest();
+    assert.equal(req.method, 'POST');
+    assert.equal(req.url, 'https://api.heleket.com/v1/payment/aml-links');
+    const body = JSON.parse(req.body);
+    assert.equal(body.uuid, 'uuid-9');
+    // order_id was undefined, so encodeBody strips it from the wire payload.
+    assert.equal(body.order_id, undefined);
+  });
+
+  it('getAmlLinks requires uuid or order_id', async () => {
+    const client = newClient(new FakeTransport());
+    await assert.rejects(() => client.getAmlLinks(), /one of uuid or order_id/);
+  });
+
   it('transport failure surfaces as HttpError', async () => {
     const fake = new FakeTransport().failNext(new Error('simulated network drop'));
     const client = newClient(fake);

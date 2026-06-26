@@ -32,10 +32,7 @@ describe('client construction', () => {
   });
 
   it('rejects merchantId with CRLF (header injection guard)', () => {
-    assert.throws(
-      () => new HeleketPayment('uuid\r\nX-Injected: 1', 'key'),
-      /control character/,
-    );
+    assert.throws(() => new HeleketPayment('uuid\r\nX-Injected: 1', 'key'), /control character/);
   });
 
   it('rejects apiKey with control characters', () => {

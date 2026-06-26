@@ -31,7 +31,9 @@
     "dist/src",
     "dist/bin",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "CHANGELOG.md",
+    "UPGRADING.md"
   ],
   "scripts": {
     "build": "npm run build:esm && npm run build:cjs && npm run build:finalize",
@@ -46,7 +48,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "qa": "npm run lint && npm run format:check && npm run test",
-    "clean": "rm -rf dist dist-cjs coverage"
+    "clean": "rm -rf dist dist-cjs coverage",
+    "prepublishOnly": "npm run qa && npm run build"
   },
   "devDependencies": {
     "@types/node": "^20.11.0",
@@ -60,9 +63,23 @@
   "keywords": [
     "heleket",
     "crypto",
+    "cryptocurrency",
     "payments",
     "payouts",
-    "sdk"
+    "webhooks",
+    "sdk",
+    "api"
   ],
-  "homepage": "https://doc.heleket.com/"
+  "author": "Heleket (https://heleket.com)",
+  "homepage": "https://github.com/Heleket/nodejs-sdk#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Heleket/nodejs-sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Heleket/nodejs-sdk/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
 }

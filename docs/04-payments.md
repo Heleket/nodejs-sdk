@@ -109,19 +109,22 @@ await client.blockStaticWallet({ order_id: 'topup-user-7', is_refund: false });
 await client.refundBlockedWallet(wallet.uuid, 'TXyz...recovery-address...');
 ```
 
-## refund
+## getAmlLinks
 
-`refund(req: RefundRequest): Promise<RefundResult>` → `POST /v1/payment/refund`
+`getAmlLinks(uuid?: string, orderId?: string): Promise<AmlLink[]>` → `POST /v1/payment/aml-links`
 
-Required: `address`, `is_subtract`; one of `uuid` / `order_id`.
+AML/KYC/SoF questionnaire links for a blocked (`locked`) payment. Pass one of `uuid` / `orderId`. Hand each `link` to the end user to complete the questionnaire and unblock the payment; compare `status` against `AmlLinkStatus`.
 
 ```ts
-await client.refund({
-  uuid: invoiceUuid,
-  address: 'TBaCkAdDrEsS',
-  is_subtract: true,
-});
+const links = await client.getAmlLinks(invoiceUuid);
+for (const l of links) {
+  console.log(l.status, l.link); // e.g. "pending" https://aml.heleket.com/...
+}
 ```
+
+## refund — moved to `HeleketPayout`
+
+Refunds (`POST /v1/payment/refund`) are signed with the **payout** API key, so the method lives on [`HeleketPayout.refund`](05-payouts.md#refund), **not** `HeleketPayment`. (Don't confuse it with `refundBlockedWallet` above — that's a separate wallet endpoint that stays here.)
 
 ## resendWebhook
 
@@ -170,7 +173,9 @@ for (const row of balance.merchant) {
 
 ## getExchangeRates
 
-`getExchangeRates(currency: string): Promise<ExchangeRate[]>` → `POST /v1/exchange-rate/{currency}/list`
+`getExchangeRates(currency: string): Promise<ExchangeRate[]>` → `GET /v1/exchange-rate/{currency}/list`
+
+This is the **only** `GET` endpoint in the SDK — it's read-only and carries its input in the path, so the signed body is empty (`sign = md5(apiKey)`). Every other endpoint is a `POST`.
 
 ```ts
 const rates = await client.getExchangeRates('USD');

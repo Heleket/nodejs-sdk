@@ -1,6 +1,13 @@
 import { BaseClient, paginate, type RequestOptions } from './client.js';
 import { type ClientOptions, resolveConfig } from './config.js';
-import type { HistoryOptions, HistoryPage, InfoOptions, Service } from './payment-types.js';
+import type {
+  HistoryOptions,
+  HistoryPage,
+  InfoOptions,
+  RefundRequest,
+  RefundResult,
+  Service,
+} from './payment-types.js';
 import type {
   CalculateRequest,
   Calculation,
@@ -29,6 +36,20 @@ export class HeleketPayout extends BaseClient {
   /** Create a withdrawal. */
   async createPayout(req: CreatePayoutRequest, options?: RequestOptions): Promise<Payout> {
     return this.post('/v1/payout', req, options);
+  }
+
+  /**
+   * Refund a paid invoice in full or in part.
+   *
+   * Hits `POST /v1/payment/refund` but is signed with the **payout** API key,
+   * so it lives on {@link HeleketPayout} rather than {@link HeleketPayment}.
+   * Required: `address`, `is_subtract`; one of `uuid` / `order_id`.
+   */
+  async refund(req: RefundRequest, options?: RequestOptions): Promise<RefundResult> {
+    if (!req.uuid && !req.order_id) {
+      throw new Error('heleket: one of uuid or order_id must be set');
+    }
+    return this.post('/v1/payment/refund', req, options);
   }
 
   /** Look up a payout by UUID or order_id. */

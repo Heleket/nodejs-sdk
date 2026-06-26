@@ -35,7 +35,30 @@ export abstract class BaseClient {
   }
 
   protected async post<T>(path: string, params: unknown, options?: RequestOptions): Promise<T> {
-    const body = encodeBody(params);
+    return this.send<T>('POST', path, encodeBody(params), options);
+  }
+
+  /**
+   * Send a signed GET request. For read-only endpoints that carry all their
+   * input in the path (e.g. exchange rates). There is no request body, so the
+   * signed bytes are the empty string — exactly like a POST with no params:
+   * `sign = md5(api_key)`.
+   */
+  protected async get<T>(path: string, options?: RequestOptions): Promise<T> {
+    return this.send<T>('GET', path, '', options);
+  }
+
+  /**
+   * Sign the exact body bytes, attach the auth headers, dispatch via the
+   * transport, and translate the response. Shared by {@link post} and
+   * {@link get} so the signing and error handling live in exactly one place.
+   */
+  private async send<T>(
+    method: 'GET' | 'POST',
+    path: string,
+    body: string,
+    options?: RequestOptions,
+  ): Promise<T> {
     const signature = sign(body, this.config.apiKey);
     const url = this.config.baseUrl + path;
 
@@ -51,19 +74,19 @@ export abstract class BaseClient {
       'User-Agent': USER_AGENT,
     };
     // Only advertise Content-Type when there's actually a body — Heleket's
-    // empty-params endpoints sign and send no body, so a stray header would
-    // be technically incorrect.
+    // empty-params and GET endpoints sign and send no body, so a stray header
+    // would be technically incorrect.
     if (body !== '') {
       headers['Content-Type'] = 'application/json';
     }
 
     if (this.config.debug) {
-      this.config.logger({ kind: 'request', method: 'POST', url, body });
+      this.config.logger({ kind: 'request', method, url, body });
     }
 
     let response;
     try {
-      response = await this.config.transport.roundTrip('POST', url, headers, body, {
+      response = await this.config.transport.roundTrip(method, url, headers, body, {
         signal: options?.signal,
         timeoutMs: this.config.timeoutMs,
       });
