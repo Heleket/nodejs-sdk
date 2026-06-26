@@ -38,7 +38,7 @@ So a Node.js round-trip through `JSON.parse` and `JSON.stringify` strips the sla
 
 ```ts
 import { createServer } from 'node:http';
-import { SignatureError, WebhookVerifier } from '@heleket/sdk/webhook';
+import { SignatureError, WebhookVerifier } from '@heleket-payment/sdk/webhook';
 
 const verifier = new WebhookVerifier(paymentKey);
 

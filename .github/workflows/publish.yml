@@ -54,7 +54,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: npm
-      url: https://www.npmjs.com/package/@heleket/sdk
+      url: https://www.npmjs.com/package/@heleket-payment/sdk
     permissions:
       contents: read
       id-token: write # OIDC token for npm provenance

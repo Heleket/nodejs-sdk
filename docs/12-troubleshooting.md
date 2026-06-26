@@ -70,7 +70,7 @@ Not a bug — schedule rotations accordingly.
 If Heleket rejects your **outbound** requests with a signature error, the most common cause is hand-rolled HTTP (the SDK handles signing correctly internally). The recipe:
 
 ```ts
-import { sign } from '@heleket/sdk';
+import { sign } from '@heleket-payment/sdk';
 
 const body = JSON.stringify(params);
 const signature = sign(body, apiKey);

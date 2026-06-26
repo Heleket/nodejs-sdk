@@ -1,6 +1,6 @@
 # Heleket Node.js integration (reference)
 
-A production-grade reference SDK for the [Heleket](https://heleket.com) cryptocurrency payment API. Written in **TypeScript**, published as `@heleket/sdk` with both `.js` (ESM) and `.d.ts` outputs — works equally well from TypeScript and pure-JavaScript projects.
+A production-grade reference SDK for the [Heleket](https://heleket.com) cryptocurrency payment API. Written in **TypeScript**, published as `@heleket-payment/sdk` with both `.js` (ESM) and `.d.ts` outputs — works equally well from TypeScript and pure-JavaScript projects.
 
 Covers the full documented surface (payments, payouts, balance, services, exchange rates), ships with `node:test` unit tests, runnable examples, byte-fidelity webhook verification, debug mode wired into your choice of logger, a `heleket-webhook-inspect` CLI, and a Docker harness.
 
@@ -9,7 +9,7 @@ Zero runtime dependencies — only the Node.js standard library (`node:crypto`, 
 ## Quickstart
 
 ```ts
-import { HeleketPayment } from '@heleket/sdk';
+import { HeleketPayment } from '@heleket-payment/sdk';
 
 const client = new HeleketPayment(merchantId, paymentKey);
 
@@ -25,7 +25,7 @@ console.log(invoice.url); // → https://pay.heleket.com/pay/<uuid>
 ## Install
 
 ```bash
-npm install @heleket/sdk
+npm install @heleket-payment/sdk
 ```
 
 Requirements: Node 20 LTS+ (built-in `fetch`, `node:test`).
@@ -50,7 +50,7 @@ Full reference lives in [`docs/`](docs/README.md):
 
 ```
 src/                     TypeScript source — single source of truth
-src/webhook/             Webhook signature verification (importable as @heleket/sdk/webhook)
+src/webhook/             Webhook signature verification (importable as @heleket-payment/sdk/webhook)
 test/                    node:test unit tests + FakeTransport for offline testing
 examples/                Twelve runnable scripts covering every endpoint
 bin/                     heleket-webhook-inspect — CLI for verifying webhook payloads
@@ -86,7 +86,7 @@ make help                 # Full target list
 
 - Bump the version in **both** `package.json` and `src/version.ts` (the latter feeds the `User-Agent`).
 - Update [`CHANGELOG.md`](CHANGELOG.md) and, for breaking changes, [`UPGRADING.md`](UPGRADING.md).
-- Tag the release `vX.Y.Z` and push the tag. [`.github/workflows/publish.yml`](.github/workflows/publish.yml) verifies the tag matches `package.json`, builds, and publishes `@heleket/sdk` to npm with provenance (requires the `NPM_TOKEN` repository secret).
+- Tag the release `vX.Y.Z` and push the tag. [`.github/workflows/publish.yml`](.github/workflows/publish.yml) verifies the tag matches `package.json`, builds, and publishes `@heleket-payment/sdk` to npm with provenance (requires the `NPM_TOKEN` repository secret).
 
 ## License
 

@@ -12,22 +12,22 @@ The SDK has **no runtime third-party dependencies**.
 ## Install
 
 ```bash
-npm install @heleket/sdk
+npm install @heleket-payment/sdk
 ```
 
 ESM is the only published module format:
 
 ```ts
-import { HeleketPayment, HeleketPayout } from '@heleket/sdk';
+import { HeleketPayment, HeleketPayout } from '@heleket-payment/sdk';
 
 // For webhook-only consumers (tree-shakes the rest of the SDK):
-import { WebhookVerifier } from '@heleket/sdk/webhook';
+import { WebhookVerifier } from '@heleket-payment/sdk/webhook';
 ```
 
 If your project uses CommonJS (`require`), use a top-level `await import()`:
 
 ```js
-const { HeleketPayment } = await import('@heleket/sdk');
+const { HeleketPayment } = await import('@heleket-payment/sdk');
 ```
 
 ## TypeScript or JavaScript — both supported
@@ -44,7 +44,7 @@ This is the same model used by `stripe`, `openai`, `@aws-sdk/*`.
 A one-liner that signs an empty body — does not hit the network:
 
 ```ts
-import { sign } from '@heleket/sdk';
+import { sign } from '@heleket-payment/sdk';
 console.log(sign('', 'your-api-key'));
 ```
 

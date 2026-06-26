@@ -5,7 +5,7 @@ and the steps to adopt them are documented here, newest first.
 
 ## 0.1.0 — initial release
 
-`0.1.0` is the first published version of `@heleket/sdk`, so there is nothing to
+`0.1.0` is the first published version of `@heleket-payment/sdk`, so there is nothing to
 migrate from. One convention is worth calling out up front — especially if
 you've used a Heleket SDK in another language, where `refund` historically lived
 on the payment client:
@@ -17,7 +17,7 @@ on the payment client:
   only.
 
   ```ts
-  import { HeleketPayout } from '@heleket/sdk';
+  import { HeleketPayout } from '@heleket-payment/sdk';
 
   const payout = new HeleketPayout(merchantId, payoutKey);
   await payout.refund({ uuid: invoiceUuid, address: 'TBaCk…', is_subtract: true });

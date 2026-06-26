@@ -24,7 +24,7 @@ Quick lookup tables.
 Helpers:
 
 ```ts
-import { isPaymentStatusFinal, isPaymentStatusSuccessful } from '@heleket/sdk';
+import { isPaymentStatusFinal, isPaymentStatusSuccessful } from '@heleket-payment/sdk';
 
 isPaymentStatusFinal('paid'); // true
 isPaymentStatusSuccessful('paid'); // true

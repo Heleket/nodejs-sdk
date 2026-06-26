@@ -3,7 +3,7 @@
 Every method on `HeleketPayment`. All examples assume:
 
 ```ts
-import { HeleketPayment } from '@heleket/sdk';
+import { HeleketPayment } from '@heleket-payment/sdk';
 const client = new HeleketPayment(merchantId, paymentKey);
 ```
 

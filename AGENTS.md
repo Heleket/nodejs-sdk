@@ -10,8 +10,8 @@ The reference Node.js SDK for the [Heleket](https://heleket.com) cryptocurrency
 payment API: payments, payouts, balance, exchange rates, services, and signed
 webhooks. Written in TypeScript and typed end-to-end (ships `.d.ts`).
 
-- Package: **`@heleket/sdk`** on npm. Webhook-only consumers can import the
-  `@heleket/sdk/webhook` subpath.
+- Package: **`@heleket-payment/sdk`** on npm. Webhook-only consumers can import the
+  `@heleket-payment/sdk/webhook` subpath.
 - **Node 20+** (built-in `fetch`, `node:test`, `node:crypto`).
 - **Zero runtime dependencies** — Node standard library only.
 - Dual published output: **ESM** (`.js`) + **CommonJS** (`.cjs`) + types
@@ -23,7 +23,7 @@ webhooks. Written in TypeScript and typed end-to-end (ships `.d.ts`).
 | Path                             | Purpose                                                                                       |
 | -------------------------------- | --------------------------------------------------------------------------------------------- |
 | `src/`                           | TypeScript source — the single source of truth. Public names are re-exported from `index.ts`. |
-| `src/webhook/`                   | Webhook verification, also published as the `@heleket/sdk/webhook` subpath.                   |
+| `src/webhook/`                   | Webhook verification, also published as the `@heleket-payment/sdk/webhook` subpath.           |
 | `test/`                          | `node:test` suite + `test/fakes/fake-transport.ts` (`FakeTransport`) for offline HTTP.        |
 | `examples/`                      | Runnable scripts (`01`..`12`) covering every endpoint + `_bootstrap.ts`. Need `.env`.         |
 | `bin/heleket-webhook-inspect`    | CLI to verify/dump a webhook payload.                                                         |

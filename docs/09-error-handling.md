@@ -25,7 +25,7 @@ All extend the standard `Error`. Inspect with `instanceof`.
 ## Recommended catch shape
 
 ```ts
-import { ApiError, HttpError, ValidationError } from '@heleket/sdk';
+import { ApiError, HttpError, ValidationError } from '@heleket-payment/sdk';
 
 try {
   const invoice = await client.createInvoice(req);

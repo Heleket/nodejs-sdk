@@ -24,7 +24,7 @@ The SDK is fully testable offline thanks to the `Transport` interface. Inject `F
 ```ts
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { HeleketPayment, type Transport, type TransportResponse } from '@heleket/sdk';
+import { HeleketPayment, type Transport, type TransportResponse } from '@heleket-payment/sdk';
 
 class FakeTransport implements Transport {
   responses: TransportResponse[] = [];

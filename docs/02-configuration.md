@@ -14,7 +14,7 @@ Each key is also used to verify **its own** webhooks (payment webhooks → payme
 ## Default construction
 
 ```ts
-import { HeleketPayment, HeleketPayout } from '@heleket/sdk';
+import { HeleketPayment, HeleketPayout } from '@heleket-payment/sdk';
 
 const payment = new HeleketPayment(merchantId, paymentKey);
 const payout = new HeleketPayout(merchantId, payoutKey);
@@ -49,7 +49,7 @@ Available options:
 The `Transport` interface has a single method. Implement it to plug in retry middleware, instrumentation, or a non-fetch HTTP client.
 
 ```ts
-import { type Transport, HeleketPayment } from '@heleket/sdk';
+import { type Transport, HeleketPayment } from '@heleket-payment/sdk';
 
 const myTransport: Transport = {
   async roundTrip(method, url, headers, body, options) {

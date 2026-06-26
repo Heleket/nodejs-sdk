@@ -30,10 +30,10 @@
 
 ## Package layout
 
-| Path                   | Purpose                                                                                                                       |
-| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `@heleket/sdk` (root)  | Public types, constructors, signature helpers, error types                                                                    |
-| `@heleket/sdk/webhook` | Webhook signature verification + payload value type. Imported separately so webhook-only consumers don't pull the full client |
+| Path                           | Purpose                                                                                                                       |
+| ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------- |
+| `@heleket-payment/sdk` (root)  | Public types, constructors, signature helpers, error types                                                                    |
+| `@heleket-payment/sdk/webhook` | Webhook signature verification + payload value type. Imported separately so webhook-only consumers don't pull the full client |
 
 ## Source files
 

@@ -1,8 +1,8 @@
-// Public API surface of @heleket/sdk.
+// Public API surface of @heleket-payment/sdk.
 //
 // Use the `webhook` subpath import for webhook-only consumers:
 //
-//     import { WebhookVerifier } from '@heleket/sdk/webhook';
+//     import { WebhookVerifier } from '@heleket-payment/sdk/webhook';
 
 export { HeleketPayment } from './payment.js';
 export { HeleketPayout } from './payout.js';
@@ -74,5 +74,5 @@ export type {
 } from './payout-types.js';
 
 // Re-export the webhook subpackage's public types from the root for convenience
-// (consumers can still import from '@heleket/sdk/webhook' for tree-shaking).
+// (consumers can still import from '@heleket-payment/sdk/webhook' for tree-shaking).
 export { WebhookPayload, WebhookVerifier } from './webhook/index.js';

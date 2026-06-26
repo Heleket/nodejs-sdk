@@ -7,7 +7,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [0.1.0] - 2026-06-26
 
 Initial public release — a production-grade reference Node.js SDK for the Heleket
-cryptocurrency payment API. Written in TypeScript, published as `@heleket/sdk`
+cryptocurrency payment API. Written in TypeScript, published as `@heleket-payment/sdk`
 with dual ESM + CommonJS output and bundled type definitions. Zero runtime
 dependencies (Node standard library only).
 

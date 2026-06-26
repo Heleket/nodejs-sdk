@@ -7,7 +7,7 @@ Two tools ship with the SDK: a **debug flag** for runtime tracing via a `slog`-s
 Pass `debug: true` to the client constructor, or set `HELEKET_DEBUG=1` in your `.env` if you use the example bootstrap.
 
 ```ts
-import { HeleketPayment, type DebugEntry } from '@heleket/sdk';
+import { HeleketPayment, type DebugEntry } from '@heleket-payment/sdk';
 
 const client = new HeleketPayment(merchantId, paymentKey, {
   debug: true,
@@ -109,7 +109,7 @@ Then pipe that file into the inspector.
 ## Custom transport with verbose tracing
 
 ```ts
-import { type Transport, HeleketPayment } from '@heleket/sdk';
+import { type Transport, HeleketPayment } from '@heleket-payment/sdk';
 
 class TracingTransport implements Transport {
   constructor(private inner: Transport) {}

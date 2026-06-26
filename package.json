@@ -1,5 +1,5 @@
 {
-  "name": "@heleket/sdk",
+  "name": "@heleket-payment/sdk",
   "version": "0.1.0",
   "description": "Reference Node.js SDK for the Heleket cryptocurrency payment API. Typed in TypeScript, ships dual .js + .d.ts.",
   "license": "MIT",

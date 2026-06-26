@@ -3,7 +3,7 @@
 Withdrawals from the merchant balance. Uses the **payout API key** — different from the payment key.
 
 ```ts
-import { HeleketPayout } from '@heleket/sdk';
+import { HeleketPayout } from '@heleket-payment/sdk';
 const client = new HeleketPayout(merchantId, payoutKey);
 ```
 
