@@ -3,7 +3,7 @@
 ## Running the SDK's own tests
 
 ```bash
-make test         # npm run build && node --test dist/test/
+make test         # build:esm + node --test on the compiled dist/test/*.test.js
 make lint         # ESLint
 make format-check # Prettier dry-run
 make qa           # All gates
