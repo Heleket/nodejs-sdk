@@ -29,7 +29,7 @@ describe('PaymentClient', () => {
 
     const req = fake.lastRequest();
     assert.equal(req.method, 'POST');
-    assert.equal(req.url, 'https://api.heleket.com/v1/payment');
+    assert.equal(req.url, 'https://api.heleket.hk/v1/payment');
     assert.equal(req.headers['merchant'], MERCHANT_ID);
     assert.equal(req.headers['Content-Type'], 'application/json');
     // SDK tags itself so Heleket support can attribute traffic without
@@ -112,10 +112,7 @@ describe('PaymentClient', () => {
     const client = newClient(fake);
 
     await client.listHistory({ cursor: 'abc=def' });
-    assert.equal(
-      fake.lastRequest().url,
-      'https://api.heleket.com/v1/payment/list?cursor=abc%3Ddef',
-    );
+    assert.equal(fake.lastRequest().url, 'https://api.heleket.hk/v1/payment/list?cursor=abc%3Ddef');
   });
 
   it('getExchangeRates issues a GET with an empty signed body', async () => {
@@ -131,7 +128,7 @@ describe('PaymentClient', () => {
 
     const req = fake.lastRequest();
     assert.equal(req.method, 'GET');
-    assert.equal(req.url, 'https://api.heleket.com/v1/exchange-rate/USD/list');
+    assert.equal(req.url, 'https://api.heleket.hk/v1/exchange-rate/USD/list');
     // No body on a GET — the signed bytes collapse to md5(api_key), and no
     // Content-Type is advertised.
     assert.equal(req.body, '');
@@ -143,9 +140,7 @@ describe('PaymentClient', () => {
   it('getAmlLinks posts the identifier and parses the list', async () => {
     const fake = new FakeTransport().enqueueJson({
       state: 0,
-      result: [
-        { link: 'https://aml.heleket.com/q/abc', expired_at: '1700000000', status: 'pending' },
-      ],
+      result: [{ link: 'https://example.com/q/abc', expired_at: '1700000000', status: 'pending' }],
     });
     const client = newClient(fake);
 
@@ -155,7 +150,7 @@ describe('PaymentClient', () => {
 
     const req = fake.lastRequest();
     assert.equal(req.method, 'POST');
-    assert.equal(req.url, 'https://api.heleket.com/v1/payment/aml-links');
+    assert.equal(req.url, 'https://api.heleket.hk/v1/payment/aml-links');
     const body = JSON.parse(req.body);
     assert.equal(body.uuid, 'uuid-9');
     // order_id was undefined, so encodeBody strips it from the wire payload.

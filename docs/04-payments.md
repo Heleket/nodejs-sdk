@@ -118,7 +118,7 @@ AML/KYC/SoF questionnaire links for a blocked (`locked`) payment. Pass one of `u
 ```ts
 const links = await client.getAmlLinks(invoiceUuid);
 for (const l of links) {
-  console.log(l.status, l.link); // e.g. "pending" https://aml.heleket.com/...
+  console.log(l.status, l.link); // e.g. "pending" <questionnaire link>
 }
 ```
 

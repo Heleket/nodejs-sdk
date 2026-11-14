@@ -81,9 +81,9 @@ describe('WebhookVerifier', () => {
   // JSON.stringify preserves insertion order but doesn't escape slashes either.
   // verifyRaw must work on the raw bytes so the slash escapes survive.
   it('verifyRaw handles PHP-style payloads (insertion order + \\/ escapes)', () => {
-    const bodyWithoutSign = `{"type":"payment","uuid":"u1","status":"paid","url":"https:\\/\\/pay.heleket.com\\/pay\\/abc"}`;
+    const bodyWithoutSign = `{"type":"payment","uuid":"u1","status":"paid","url":"https:\\/\\/pay.heleket.hk\\/pay\\/abc"}`;
     const computedSign = sign(bodyWithoutSign, API_KEY);
-    const body = `{"type":"payment","uuid":"u1","status":"paid","url":"https:\\/\\/pay.heleket.com\\/pay\\/abc","sign":"${computedSign}"}`;
+    const body = `{"type":"payment","uuid":"u1","status":"paid","url":"https:\\/\\/pay.heleket.hk\\/pay\\/abc","sign":"${computedSign}"}`;
 
     const result = new WebhookVerifier(API_KEY).verifyRaw(body);
     assert.equal(result.uuid, 'u1');

@@ -6,7 +6,7 @@ architecture tour — see [`docs/`](docs/README.md) for the full reference.
 
 ## What this is
 
-The reference Node.js SDK for the [Heleket](https://heleket.com) cryptocurrency
+The reference Node.js SDK for the [Heleket](https://heleket.hk) cryptocurrency
 payment API: payments, payouts, balance, exchange rates, services, and signed
 webhooks. Written in TypeScript and typed end-to-end (ships `.d.ts`).
 
@@ -16,7 +16,7 @@ webhooks. Written in TypeScript and typed end-to-end (ships `.d.ts`).
 - **Zero runtime dependencies** — Node standard library only.
 - Dual published output: **ESM** (`.js`) + **CommonJS** (`.cjs`) + types
   (`.d.ts` / `.d.cts`).
-- Upstream API docs: <https://doc.heleket.com>.
+- Upstream API docs: <https://doc.heleket.hk>.
 
 ## Repository map
 

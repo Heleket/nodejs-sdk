@@ -21,7 +21,7 @@ If you mix them up, every webhook fails.
 
 ## Why `verifyRaw` (not `verify`) for production
 
-Heleket's server uses PHP-encoded JSON: insertion-order keys, forward slashes escaped as `\/` (`"https:\/\/pay.heleket.com\/..."`).
+Heleket's server uses PHP-encoded JSON: insertion-order keys, forward slashes escaped as `\/` (`"https:\/\/pay.heleket.hk\/..."`).
 
 JavaScript's behaviour:
 

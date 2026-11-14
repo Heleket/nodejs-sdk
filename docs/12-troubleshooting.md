@@ -38,7 +38,7 @@ echo '<paste payload>' | node dist/bin/heleket-webhook-inspect.js --key=$KEY
 
 ## 3. `ApiError` with `Wrong key` / `You are forbidden`
 
-The merchant account is restricted or in moderation. Check the dashboard at <https://dash.heleket.com>. New accounts need domain verification before invoices are accepted.
+The merchant account is restricted or in moderation. Check the dashboard at <https://dash.heleket.hk>. New accounts need domain verification before invoices are accepted.
 
 ## 4. `HttpError` containing `aborted` / `timed out`
 
@@ -48,7 +48,7 @@ Heleket can take 5–10 seconds during heavy blockchain confirmation. Raise the 
 new HeleketPayment(merchantId, key, { timeoutMs: 60_000 });
 ```
 
-If the timeout fires on every call, your egress firewall is blocking `api.heleket.com:443`.
+If the timeout fires on every call, your egress firewall is blocking `api.heleket.hk:443`.
 
 ## 5. Payments stuck in `check` / `confirm_check`
 
@@ -120,7 +120,7 @@ The SDK ships compiled `.js` — the source `.ts` files are not directly runnabl
 
 ## Still stuck?
 
-Capture the failing request/response with `debug: true` (see [07 — Debugging](07-debugging.md)), then reach out to Heleket support at <https://heleket.com/contacts> with:
+Capture the failing request/response with `debug: true` (see [07 — Debugging](07-debugging.md)), then reach out to Heleket support at <https://heleket.hk/contacts> with:
 
 - The `order_id` involved
 - Approximate timestamps (UTC+3)

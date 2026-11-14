@@ -1,6 +1,6 @@
 {
   "name": "@heleket-payment/sdk",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Reference Node.js SDK for the Heleket cryptocurrency payment API. Typed in TypeScript, ships dual .js + .d.ts.",
   "license": "MIT",
   "type": "module",
@@ -70,7 +70,7 @@
     "sdk",
     "api"
   ],
-  "author": "Heleket (https://heleket.com)",
+  "author": "Heleket (https://heleket.hk)",
   "homepage": "https://github.com/Heleket/nodejs-sdk#readme",
   "repository": {
     "type": "git",

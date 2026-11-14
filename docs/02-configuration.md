@@ -28,7 +28,7 @@ Pass a third argument to override defaults:
 const client = new HeleketPayment(merchantId, paymentKey, {
   debug: true,
   timeoutMs: 60_000,
-  baseUrl: 'https://api.heleket.com',
+  domain: 'heleket.hk', // API host becomes https://api.heleket.hk
   logger: (entry) => myLogger.debug(entry),
   transport: customTransport,
 });
@@ -36,13 +36,14 @@ const client = new HeleketPayment(merchantId, paymentKey, {
 
 Available options:
 
-| Option      | Default                   | Purpose                                  |
-| ----------- | ------------------------- | ---------------------------------------- |
-| `baseUrl`   | `https://api.heleket.com` | Override API base URL (testing only)     |
-| `timeoutMs` | `30_000`                  | Per-request timeout                      |
-| `debug`     | `false`                   | Toggle debug logging                     |
-| `logger`    | stderr text sink          | Custom debug sink, receives `DebugEntry` |
-| `transport` | `FetchTransport`          | Replace the HTTP layer entirely          |
+| Option      | Default                  | Purpose                                        |
+| ----------- | ------------------------ | ---------------------------------------------- |
+| `domain`    | `heleket.hk`             | Base domain; API URL is `https://api.<domain>` |
+| `baseUrl`   | `https://api.heleket.hk` | Full API URL, wins over `domain` (testing)     |
+| `timeoutMs` | `30_000`                 | Per-request timeout                            |
+| `debug`     | `false`                  | Toggle debug logging                           |
+| `logger`    | stderr text sink         | Custom debug sink, receives `DebugEntry`       |
+| `transport` | `FetchTransport`         | Replace the HTTP layer entirely                |
 
 ## Custom transport
 

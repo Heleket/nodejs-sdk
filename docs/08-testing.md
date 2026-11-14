@@ -63,7 +63,7 @@ describe('checkout flow', () => {
     });
 
     assert.equal(invoice.uuid, 'uuid-1');
-    assert.equal(fake.requests[0]!.url, 'https://api.heleket.com/v1/payment');
+    assert.equal(fake.requests[0]!.url, 'https://api.heleket.hk/v1/payment');
   });
 });
 ```
@@ -85,7 +85,7 @@ it('creates a real invoice', { skip: !process.env.HELEKET_PAYMENT_KEY }, async (
     currency: 'USD',
     order_id: 'integ-' + Date.now(),
   });
-  assert.ok(invoice.url.startsWith('https://pay.heleket.com/'));
+  assert.ok(invoice.url.startsWith('https://pay.heleket.hk/'));
 });
 ```
 

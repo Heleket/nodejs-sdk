@@ -9,7 +9,7 @@ export { HeleketPayout } from './payout.js';
 
 export type { ClientOptions, ResolvedConfig } from './config.js';
 
-export { DEFAULT_BASE_URL, DEFAULT_TIMEOUT_MS } from './config.js';
+export { DEFAULT_BASE_URL, DEFAULT_DOMAIN, DEFAULT_TIMEOUT_MS } from './config.js';
 
 export type { DebugEntry, DebugSink } from './debug.js';
 export { stderrSink } from './debug.js';

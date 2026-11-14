@@ -1,6 +1,6 @@
 # Heleket Node.js integration (reference)
 
-A production-grade reference SDK for the [Heleket](https://heleket.com) cryptocurrency payment API. Written in **TypeScript**, published as `@heleket-payment/sdk` with both `.js` (ESM) and `.d.ts` outputs — works equally well from TypeScript and pure-JavaScript projects.
+A production-grade reference SDK for the [Heleket](https://heleket.hk) cryptocurrency payment API. Written in **TypeScript**, published as `@heleket-payment/sdk` with both `.js` (ESM) and `.d.ts` outputs — works equally well from TypeScript and pure-JavaScript projects.
 
 Covers the full documented surface (payments, payouts, balance, services, exchange rates), ships with `node:test` unit tests, runnable examples, byte-fidelity webhook verification, debug mode wired into your choice of logger, a `heleket-webhook-inspect` CLI, and a Docker harness.
 
@@ -19,7 +19,14 @@ const invoice = await client.createInvoice({
   order_id: 'order-42',
 });
 
-console.log(invoice.url); // → https://pay.heleket.com/pay/<uuid>
+console.log(invoice.url); // → https://pay.heleket.hk/pay/<uuid>
+```
+
+By default requests go to `https://api.heleket.hk`. Pass `domain` to use another domain
+(`https://api.<domain>`), or `baseUrl` to override the full URL (it wins over `domain`):
+
+```ts
+const client = new HeleketPayment(merchantId, paymentKey, { domain: 'example.org' });
 ```
 
 ## Install

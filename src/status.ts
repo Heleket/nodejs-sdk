@@ -1,6 +1,6 @@
 /**
  * Payment statuses. See
- * https://doc.heleket.com/methods/payments/payment-statuses for details.
+ * https://doc.heleket.hk/methods/payments/payment-statuses for details.
  */
 export const PaymentStatus = {
   /** Exact amount received. Final + successful. */
@@ -80,7 +80,7 @@ export function isPaymentStatusSuccessful(status: string): boolean {
 
 /**
  * Payout statuses. See
- * https://doc.heleket.com/methods/payouts/payout-statuses for details.
+ * https://doc.heleket.hk/methods/payouts/payout-statuses for details.
  */
 export const PayoutStatus = {
   Process: 'process',
@@ -161,7 +161,7 @@ export function isAmlLinkStatusSuccessful(status: string): boolean {
 
 /**
  * Exchange-rate sources accepted by create-invoice and create-payout. See
- * https://doc.heleket.com/methods/payments/creating-invoice (course_source).
+ * https://doc.heleket.hk/methods/payments/creating-invoice (course_source).
  */
 export const CourseSource = {
   Binance: 'Binance',

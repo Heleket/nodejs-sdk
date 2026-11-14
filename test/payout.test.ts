@@ -29,7 +29,7 @@ describe('PayoutClient', () => {
       is_subtract: true,
     });
     assert.equal(payout.uuid, 'po-1');
-    assert.equal(fake.lastRequest().url, 'https://api.heleket.com/v1/payout');
+    assert.equal(fake.lastRequest().url, 'https://api.heleket.hk/v1/payout');
   });
 
   it('refund hits /v1/payment/refund signed with the payout key', async () => {
@@ -50,7 +50,7 @@ describe('PayoutClient', () => {
     assert.equal(req.method, 'POST');
     // Payment-domain path, but signed with the payout key — that's why refund
     // lives on HeleketPayout.
-    assert.equal(req.url, 'https://api.heleket.com/v1/payment/refund');
+    assert.equal(req.url, 'https://api.heleket.hk/v1/payment/refund');
     const expectedBody = JSON.stringify({
       uuid: 'inv-1',
       address: 'TRefundAddr',
@@ -100,7 +100,7 @@ describe('PayoutClient', () => {
     await client.transferToPersonal('1.5', 'USDT');
     await client.transferToBusiness('1.5', 'USDT');
 
-    assert.equal(fake.requests[0]!.url, 'https://api.heleket.com/v1/transfer/to-personal');
-    assert.equal(fake.requests[1]!.url, 'https://api.heleket.com/v1/transfer/to-business');
+    assert.equal(fake.requests[0]!.url, 'https://api.heleket.hk/v1/transfer/to-personal');
+    assert.equal(fake.requests[1]!.url, 'https://api.heleket.hk/v1/transfer/to-business');
   });
 });

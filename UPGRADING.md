@@ -3,6 +3,13 @@
 This SDK follows [Semantic Versioning](https://semver.org/). Breaking changes
 and the steps to adopt them are documented here, newest first.
 
+## 0.2.0 — default domain is heleket.hk
+
+The SDK now talks to `https://api.heleket.hk` by default. No code changes are needed.
+To target another domain pass `domain: 'example.org'` (builds `https://api.example.org`);
+an explicit `baseUrl` still wins. If you pinned `baseUrl: 'https://api.heleket.com'`,
+remove it or update it.
+
 ## 0.1.0 — initial release
 
 `0.1.0` is the first published version of `@heleket-payment/sdk`, so there is nothing to

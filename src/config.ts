@@ -1,7 +1,8 @@
 import { stderrSink, type DebugSink } from './debug.js';
 import { FetchTransport, type Transport } from './transport.js';
 
-export const DEFAULT_BASE_URL = 'https://api.heleket.com';
+export const DEFAULT_DOMAIN = 'heleket.hk';
+export const DEFAULT_BASE_URL = 'https://api.heleket.hk';
 export const DEFAULT_TIMEOUT_MS = 30_000;
 
 /**
@@ -9,7 +10,12 @@ export const DEFAULT_TIMEOUT_MS = 30_000;
  * fields are optional except merchantId and apiKey, which are positional.
  */
 export interface ClientOptions {
-  /** Override the API base URL — rarely needed outside tests. */
+  /**
+   * Base domain used to build the API URL (`https://api.<domain>`). Defaults
+   * to `heleket.hk`. Ignored when `baseUrl` is set.
+   */
+  domain?: string;
+  /** Override the full API base URL — wins over `domain`. Rarely needed outside tests. */
   baseUrl?: string;
   /** Per-request timeout in milliseconds. Defaults to 30_000. */
   timeoutMs?: number;
@@ -28,6 +34,7 @@ export interface ClientOptions {
 export interface ResolvedConfig {
   merchantId: string;
   apiKey: string;
+  domain: string;
   baseUrl: string;
   timeoutMs: number;
   debug: boolean;
@@ -67,10 +74,20 @@ export function resolveConfig(
     throw new Error('heleket: timeoutMs must be > 0');
   }
 
+  const domain = (options.domain ?? DEFAULT_DOMAIN).trim();
+  if (!domain) {
+    throw new Error('heleket: domain must not be empty');
+  }
+  if (/[/\\\s]|:\/\//.test(domain)) {
+    throw new Error('heleket: domain must be a bare host name without scheme or slashes');
+  }
+  const baseUrl = options.baseUrl ?? `https://api.${domain}`;
+
   return {
     merchantId: trimmedMerchant,
     apiKey: trimmedKey,
-    baseUrl: (options.baseUrl ?? DEFAULT_BASE_URL).replace(/\/+$/, ''),
+    domain,
+    baseUrl: baseUrl.replace(/\/+$/, ''),
     timeoutMs,
     debug: options.debug ?? false,
     logger: options.logger ?? stderrSink,

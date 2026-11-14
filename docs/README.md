@@ -25,9 +25,9 @@ Start with **Installation** and **Configuration**, then either jump into **Payme
 ## Conventions
 
 - Code blocks marked `ts` are TypeScript. The same code (without type annotations) runs as plain JS — the SDK ships compiled `.js` so you don't need a TS toolchain to use it.
-- Endpoint paths are shown relative to the API base URL (`https://api.heleket.com`).
+- Endpoint paths are shown relative to the API base URL (`https://api.heleket.hk`).
 - Square brackets indicate **optional** parameters; everything else is required.
 
 ## Upstream documentation
 
-This SDK wraps the official Heleket API documented at <https://doc.heleket.com>. When in doubt about API semantics, the official docs are authoritative.
+This SDK wraps the official Heleket API documented at <https://doc.heleket.hk>. When in doubt about API semantics, the official docs are authoritative.
